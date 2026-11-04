@@ -50,6 +50,17 @@ node scripts/package.mjs
 
 输出 `dist/php-support-<版本>-darwin.zip`（同时适用 Apple Silicon 与 Intel Mac）和它的 SHA-256。
 
+## 诊断日志
+
+在启用结构化日志 v2 的 Lithe macOS preview 中，宿主按语言服务身份将 Intelephense 的生命周期、
+`window/logMessage` 和有界 stderr 诊断送入当前会话的 `lsp/php` 通道。
+保留 `--stdio` 启动方式，由宿主统一进行脱敏、截断、写入和保留；插件不创建自己的日志 writer。
+PHP 程序与 PHPUnit 的输出仍属于运行/测试控制台，不复制进诊断日志。
+
+排障时使用 Lithe 的独立日志窗口和诊断导出，详细诊断仅临时开启。
+不要把 PHP 源码、HTTP/数据库内容、环境变量、凭据或完整协议载荷写入诊断日志。
+Windows 的日志实现仍为 v1；本文没有声明 Windows 已完成 v2 验收。
+
 ## 发布新版本
 
 1. 修改 `io.github.lithe-idea.php-support/plugin.json` 的 `version`，合入 `main`。
