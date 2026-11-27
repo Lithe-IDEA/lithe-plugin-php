@@ -1,7 +1,7 @@
 # PHP Support for Lithe
 
 为 [Lithe](https://github.com/1lck/Lithe-IDEA) 提供 PHP 代码智能、运行 PHP 文件和 PHPUnit 测试。
-这是一个通过 [Lithe Store](https://github.com/Lithe-IDEA/Lithe-store) 分发的**社区插件**；
+这是一个独立发布的**社区插件**；
 它由原先的官方插件 `dev.lithe.plugin.php-support` 迁移而来。
 
 > English: PHP language intelligence through your own Intelephense, plus running PHP files and PHPUnit tests, for Lithe.
@@ -14,13 +14,17 @@
 | 运行当前 `.php` 文件 | 你电脑上的 `php` |
 | PHPUnit 测试（整个项目、当前文件、单个测试） | `php` 和项目里的 `vendor/bin/phpunit` |
 
-插件本身只有一份 `plugin.json`，不附带任何可执行文件。安装时 Lithe 会弹窗列出以上程序，确认后才会安装。
+插件的执行入口全部由 `plugin.json` 声明，ZIP 不包含可执行文件。安装时 Lithe 会弹窗列出以上程序，确认后才会安装。
 
 与原官方插件的区别：官方插件把 Intelephense 打进了插件包；Intelephense 的许可只允许终端用户自行安装使用，
 不允许再分发，所以社区版改为启动你自己安装的 `intelephense`。Lithe 会把它发现的 Node.js 目录加到语言服务器的
 `PATH` 前面，从程序坞打开 Lithe 时也能找到 `node`。
 
 ## 安装
+
+当前发布的 ZIP 适用于 macOS（Apple Silicon 和 Intel）。插件 ID 为
+`io.github.lithe-idea.php-support`。宿主需支持该包的 `schemaVersion: 2` 与 `pluginAPIVersion: 1`。
+运行和测试还需要宿主支持清单中的 `executionProviders`。
 
 1. 安装 Node.js 和 Intelephense；要运行和测试的话再装 PHP 与 Composer：
 
@@ -29,16 +33,22 @@
    npm install -g intelephense
    ```
 
-2. 在 Lithe 中打开 **设置 → 插件 → 插件市场**，搜索 “PHP Support”，安装并确认。
-3. 按界面提示重启 Lithe，再打开项目中的 `.php` 文件以激活语言服务器。
+2. 从 [Releases](https://github.com/Lithe-IDEA/lithe-plugin-php/releases) 下载 ZIP，
+   在兼容的 Lithe 中用 **设置 → 插件 → 从磁盘安装插件** 选择 ZIP 并确认。
+3. 启用插件后打开项目中的 `.php` 文件以激活语言服务器。若 Lithe 提示信任工作区，请先确认该项目可信。
 
-Lithe 已预置 Lithe Store 社区插件源。如果你之前移除了它，先在 **⚙ → 管理插件仓库…** 中重新添加
-`https://github.com/Lithe-IDEA/Lithe-store`。
+当前版本未收录在 [Lithe Store](https://github.com/Lithe-IDEA/Lithe-store) 索引中。
+
+### 禁用与卸载
+
+在插件管理中禁用会停用语言服务器及运行、测试声明。当前桌面宿主会立即应用插件状态变更，
+并在卸载前停止它管理的插件进程。Node.js、Intelephense、PHP、Composer 和项目里的
+`vendor/bin/phpunit` 都由用户或项目管理，卸载插件不会删除它们。
 
 ### 从官方 PHP Support 迁移
 
-之前装过官方 PHP Support（`dev.lithe.plugin.php-support`）的话，Lithe 的插件管理会把它标成“已迁移到社区插件”。
-先卸载旧插件，再按上面的步骤安装本插件。两者声明的语言相同，不要同时启用。
+如果仍安装了旧版官方 PHP Support（`dev.lithe.plugin.php-support`），请先在插件管理中将它卸载，
+再按上面的步骤安装社区版。
 
 ## 本地打包
 
@@ -80,7 +90,7 @@ Windows 的日志实现仍为 v1；本文没有声明 Windows 已完成 v2 验�
    ```
 
 3. `Release` 工作流会核对标签与版本一致、打包并发布 Release（说明里附 SHA-256）。
-4. Lithe Store 的自动追踪会在 6 小时内发现新版本并开合并请求，合并后用户即可在 Lithe 中更新。
+4. 发布资产可从 Releases 下载。通过 Store 校验并收录到索引的版本才会在插件市场中显示。
 
 ## 许可
 
