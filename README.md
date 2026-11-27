@@ -14,7 +14,7 @@
 | 运行当前 `.php` 文件 | 你电脑上的 `php` |
 | PHPUnit 测试（整个项目、当前文件、单个测试） | `php` 和项目里的 `vendor/bin/phpunit` |
 
-插件的执行入口全部由 `plugin.json` 声明，包内只有清单和图标。安装时 Lithe 会弹窗列出以上程序，确认后才会安装。
+插件的执行入口全部由 `plugin.json` 声明，ZIP 不包含可执行文件。安装时 Lithe 会弹窗列出以上程序，确认后才会安装。
 
 与原官方插件的区别：官方插件把 Intelephense 打进了插件包；Intelephense 的许可只允许终端用户自行安装使用，
 不允许再分发，所以社区版改为启动你自己安装的 `intelephense`。Lithe 会把它发现的 Node.js 目录加到语言服务器的
