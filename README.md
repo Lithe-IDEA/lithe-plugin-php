@@ -14,13 +14,16 @@
 | 运行当前 `.php` 文件 | 你电脑上的 `php` |
 | PHPUnit 测试（整个项目、当前文件、单个测试） | `php` 和项目里的 `vendor/bin/phpunit` |
 
-插件本身只有一份 `plugin.json`，不附带任何可执行文件。安装时 Lithe 会弹窗列出以上程序，确认后才会安装。
+插件的执行入口全部由 `plugin.json` 声明，包内只有清单和图标。安装时 Lithe 会弹窗列出以上程序，确认后才会安装。
 
 与原官方插件的区别：官方插件把 Intelephense 打进了插件包；Intelephense 的许可只允许终端用户自行安装使用，
 不允许再分发，所以社区版改为启动你自己安装的 `intelephense`。Lithe 会把它发现的 Node.js 目录加到语言服务器的
 `PATH` 前面，从程序坞打开 Lithe 时也能找到 `node`。
 
 ## 安装
+
+当前发布的 ZIP 适用于 macOS（Apple Silicon 和 Intel）。插件 ID 为
+`io.github.lithe-idea.php-support`。运行和测试通过清单的 `executionProviders` 声明，需要 Lithe 版本支持该能力。
 
 1. 安装 Node.js 和 Intelephense；要运行和测试的话再装 PHP 与 Composer：
 
@@ -30,10 +33,16 @@
    ```
 
 2. 在 Lithe 中打开 **设置 → 插件 → 插件市场**，搜索 “PHP Support”，安装并确认。
-3. 按界面提示重启 Lithe，再打开项目中的 `.php` 文件以激活语言服务器。
+3. 启用插件后打开项目中的 `.php` 文件以激活语言服务器。若 Lithe 提示信任工作区，请先确认该项目可信。
 
 Lithe 已预置 Lithe Store 社区插件源。如果你之前移除了它，先在 **⚙ → 管理插件仓库…** 中重新添加
 `https://github.com/Lithe-IDEA/Lithe-store`。
+
+### 禁用与卸载
+
+在插件管理中禁用会停用语言服务器及运行、测试声明。当前桌面宿主会立即应用插件状态变更，
+并在卸载前停止它管理的插件进程。Node.js、Intelephense、PHP、Composer 和项目里的
+`vendor/bin/phpunit` 都由用户或项目管理，卸载插件不会删除它们。
 
 ### 从官方 PHP Support 迁移
 
